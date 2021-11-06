@@ -8,4 +8,9 @@
     <ProjectReference Include="..\MusalaDrones.Data\MusalaDrones.Data.csproj" />
     <ProjectReference Include="..\MusalaDrones.Common\MusalaDrones.Common.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
 </Project>

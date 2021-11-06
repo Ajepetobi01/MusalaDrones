@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MusalaDrones.Core.Interfaces;
+using MusalaDrones.Core.Services;
 using MusalaDrones.Data;
 
 namespace MusalaDrones.API
@@ -30,6 +32,9 @@ namespace MusalaDrones.API
         {
             services.AddDbContext<DroneContext>(opt =>
                 opt.UseInMemoryDatabase("MusalaDroneDB"));
+
+
+            services.AddScoped<IDroneService, DroneService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

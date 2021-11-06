@@ -21,6 +21,8 @@ namespace MusalaDrones.Data
 
         public DbSet<MedicationImage> MedicationImages { get; set; }
 
+        public DbSet<DroneMedication> DroneMedications { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
