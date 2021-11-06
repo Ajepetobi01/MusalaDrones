@@ -14,8 +14,9 @@ namespace MusalaDrones.Data.Models
         }
 
 
-        public Drone(string serialNumber, DroneModel model, int weight)
+        public Drone(int id, string serialNumber, DroneModel model, int weight)
         {
+            Id = id;
             SerialNumber = serialNumber;
             Model = model;
             Weight = weight;
