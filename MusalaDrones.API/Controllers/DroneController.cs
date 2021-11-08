@@ -35,8 +35,15 @@ namespace MusalaDrones.API.Controllers
             var response = await _droneService.LoadDrone(model);
             return StatusCode((int) response.Status, response);
         }
+        
+        [HttpGet("drone-items")]
+        public async Task<IActionResult> GetDroneItems([FromQuery] int DroneId)
+        {
+            var droneItems = await _droneService.GetDroneMedicationItems(DroneId);
+            return Ok(droneItems);
+        }
 
-      
+        
 
     }
 }

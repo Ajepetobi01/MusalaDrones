@@ -49,9 +49,33 @@ namespace MusalaDrones.Core.Services
 
         public async Task<List<DroneMedicationItems>> GetDroneMedicationItems(int DroneId)
         {
-        
+            //checking loaded medication items for a given drone
+            List<DroneMedicationItems> loadedItems = new List<DroneMedicationItems>();
+             //check if drone Id is a valid Drone 
 
-            throw new NotImplementedException();
+            var drone = await _context.Drones.Where(x => x.Id == DroneId).FirstOrDefaultAsync();
+
+            if(drone == null)
+                return null;
+
+            //drone is valid, get loaded medication items for drone
+            loadedItems = await (from p in _context.DroneMedications
+                join e in _context.Medications
+                    on p.DroneId equals e.Id
+                join a in _context.MedicationImages
+                    on e.ImageId equals a.Id
+                where p.DroneId == DroneId
+                select new DroneMedicationItems
+                {
+                    Name = e.Name,
+                    Code = e.Code,
+                    Weight = e.Weight,
+                    MedicationImage = a.ImageBase64
+
+                }).ToListAsync();
+
+            return loadedItems;
+
         }
 
         public async Task<BaseResult> LoadDrone(LoadDrone model)
