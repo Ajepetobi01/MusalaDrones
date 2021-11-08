@@ -145,9 +145,32 @@ namespace MusalaDrones.Core.Services
 
         }
 
-        public Task<BaseResult> RegisterDrone(RegisterDrone model)
+        public async Task<BaseResult> RegisterDrone(RegisterDrone model)
         {
-            throw new NotImplementedException();
+            //register drone
+            
+            //first, check if drone serial number exists
+
+            var checkSerial = await _context.Drones.AnyAsync(x => x.SerialNumber.ToLower()
+                                                                  == model.SerialNumber.ToLower());
+
+            if (checkSerial == true)
+                return new BaseResult("Serial Number Exists");
+            
+            //now, save drone
+
+            _context.Drones.Add(new Drone
+            {
+
+                SerialNumber = model.SerialNumber,
+                Model =model.Model,
+                State = DroneState.Idle,
+                Weight = model.Weight,
+                BatteryCapacity = 100
+                
+             });
+            await _context.SaveChangesAsync();
+            return new BaseResult();
         }
     }
 }

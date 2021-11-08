@@ -21,6 +21,14 @@ namespace MusalaDrones.API.Controllers
 
         }
 
+        [ValidateModel]
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterDrone(RegisterDrone droneModel)
+        {
+            var response = await _droneService.RegisterDrone(droneModel);
+            return StatusCode((int)response.Status, response);
+        }
+        
         
         [HttpGet("available-drones")]
         public async Task<IActionResult> GetAvailableDrones()
