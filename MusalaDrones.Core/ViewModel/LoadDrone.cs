@@ -7,6 +7,6 @@ namespace MusalaDrones.Core.ViewModel
     {
        public int DroneId { get; set; }
 
-       public List<int> MedicationId { get; set; }
+       public List<int> MedicationIds { get; set; }
     }
 }

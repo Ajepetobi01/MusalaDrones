@@ -26,7 +26,7 @@ namespace MusalaDrones.API
                 //initialize db
                 var dbContext = services.GetRequiredService<DroneContext>();
 
-                SeedData.SeedDrones(dbContext);
+                SeedData.SeedBaseData(dbContext);
             }
             host.Run();
         }

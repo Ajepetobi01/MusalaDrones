@@ -8,7 +8,7 @@ namespace MusalaDrones.Core.ViewModel
 {
     public static class SeedData
     {
-        public static void SeedDrones(DroneContext dbContext)
+        public static void SeedBaseData(DroneContext dbContext)
         {
             var drones = new List<Drone>
             {
@@ -25,6 +25,22 @@ namespace MusalaDrones.Core.ViewModel
             };
 
             dbContext.Drones.AddRange(drones);
+
+            var medications = new List<Medication>
+            {
+                new Medication(1,"Paracetamol",55,"PAC01",1),
+                new Medication(2,"Panadol",200,"PAC02",2)
+            };
+            
+            dbContext.Medications.AddRange(medications);
+            
+            var medicationImage = new List<MedicationImage>
+            {
+                new MedicationImage(1,"image base 64"),
+                new MedicationImage(2,"image base 64")
+            };
+            
+            dbContext.MedicationImages.AddRange(medicationImage);
             dbContext.SaveChanges();
         }
     }
