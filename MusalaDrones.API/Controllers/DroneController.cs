@@ -43,7 +43,12 @@ namespace MusalaDrones.API.Controllers
             return Ok(droneItems);
         }
 
-        
+        [HttpGet("battery-level")]
+        public async Task<IActionResult> CheckDroneBattery([FromQuery] int DroneId)
+        {
+            var droneItems = await _droneService.CheckBatteryLevel(DroneId);
+            return Ok(droneItems);
+        }
 
     }
 }

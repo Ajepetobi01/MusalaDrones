@@ -43,8 +43,20 @@ namespace MusalaDrones.Core.Services
 
         public async Task<double> CheckBatteryLevel(int DroneId)
         {
+            
+            double batteryLevel = 0;
 
-          throw new NotImplementedException();
+            //get drone 
+            var drone = await _context.Drones.Where(x => x.Id == DroneId).FirstOrDefaultAsync();
+
+            if (drone == null)
+                return batteryLevel;
+            
+            //get battery level
+            batteryLevel = drone.BatteryCapacity;
+
+            return batteryLevel;
+          
         }
 
         public async Task<List<DroneMedicationItems>> GetDroneMedicationItems(int DroneId)
