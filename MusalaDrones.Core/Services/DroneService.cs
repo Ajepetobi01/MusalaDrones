@@ -33,8 +33,8 @@ namespace MusalaDrones.Core.Services
                     BatteryCapacity = x.BatteryCapacity,
                     Id = x.Id,
                     Weight = x.Weight,
-                    Model = nameof(x.Model),
-                    State = nameof(x.State)
+                    Model = Enum.GetName(typeof(DroneModel), x.Model),
+                    State = Enum.GetName(typeof(DroneState), x.State)
 
                 }).ToListAsync();
 
@@ -57,6 +57,35 @@ namespace MusalaDrones.Core.Services
 
             return batteryLevel;
           
+        }
+
+        public async Task<bool> BatteryPeriodicCheck()
+        {
+           //get all drones to get their battery capacity
+           var allDrones = _context.Drones.ToList();
+           
+           //check each one of them and log their current capacity, Id
+
+           foreach (var drone in allDrones)
+           {
+               
+               //we can also do a check to perform some actions here like send an alert if battery is low and change drone state 
+               //
+               _context.PeriodicHistoryLogs.Add(new PeriodicHistoryLog
+               {
+                    InsertedDate = DateTime.Now,
+                    LastUpdatedDate = DateTime.Now,
+                    DroneId = drone.Id,
+                    EventData = $"Drone with Id {drone.Id} checked: Level is {drone.BatteryCapacity}",
+                    BatteryCapacity = drone.BatteryCapacity
+
+               });
+               
+               
+           }
+
+           await _context.SaveChangesAsync();
+           return true;
         }
 
         public async Task<List<DroneMedicationItems>> GetDroneMedicationItems(int DroneId)

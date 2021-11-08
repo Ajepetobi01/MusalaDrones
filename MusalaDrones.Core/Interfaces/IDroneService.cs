@@ -16,5 +16,7 @@ namespace MusalaDrones.Core.Interfaces
         Task<List<DroneList>> CheckAvailableDrones();
 
         Task<double> CheckBatteryLevel(int DroneId);
+
+        Task<bool> BatteryPeriodicCheck();
     }
 }

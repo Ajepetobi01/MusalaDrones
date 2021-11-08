@@ -23,11 +23,13 @@ namespace MusalaDrones.Data
 
         public DbSet<DroneMedication> DroneMedications { get; set; }
 
+        public DbSet<PeriodicHistoryLog> PeriodicHistoryLogs { get; set; }
 
 
-       
 
 
-        
+
+
+
     }
 }

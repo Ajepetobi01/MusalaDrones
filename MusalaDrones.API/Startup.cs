@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +35,10 @@ namespace MusalaDrones.API
             services.AddDbContext<DroneContext>(opt =>
                 opt.UseInMemoryDatabase("MusalaDroneDB"));
 
-
+            services.AddHangfire(config =>
+            {
+                config.UseMemoryStorage();
+            });
             services.AddScoped<IDroneService, DroneService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -55,7 +60,8 @@ namespace MusalaDrones.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MusalaDrones.API v1"));
             }
 
-
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
             
             app.UseHttpsRedirection();
@@ -68,6 +74,8 @@ namespace MusalaDrones.API
             {
                 endpoints.MapControllers();
             });
+            RecurringJob.AddOrUpdate<IDroneService>(
+                period => period.BatteryPeriodicCheck(), Cron.MinuteInterval(5));
         }
     }
 }
